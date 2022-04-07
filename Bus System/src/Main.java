@@ -57,6 +57,50 @@ public class Main
         }
     }
 
+    /**
+     * Finds the shortest path between two bus stops.
+     */
+    public static void findShortestPath()
+    {
+        boolean getOut = false;
+        while (!getOut)
+        {
+            System.out.print("""
+                               +-------------------------------------------------------------------------------------+
+                               | Please enter the stop ID of the stop you wish to depart from or "Back" to go back:""");
+            String firstStop = input.nextLine();
+            System.out.print("""
+                             +-------------------------------------------------------------------------------------+
+                             """);
+            if (firstStop.equalsIgnoreCase("Back")) {
+                getOut = true;
+                System.out.println("Returning to menu");
+            } else if (firstStop.equalsIgnoreCase("Quit") || firstStop.equalsIgnoreCase("Exit"))
+            {
+                getOut = true;
+                quit = true;
+            } else {
+                System.out.print("""
+                                 | Please enter the stop ID of the stop you wish to arrive at:""");
+                String secondStop = input.nextLine();
+                System.out.print("""
+                             +-------------------------------------------------------------------------------------+
+                             """);
+                if (secondStop.equalsIgnoreCase("Back"))
+                {
+                    getOut = true;
+                    System.out.println("Returning to menu");
+                } else if (secondStop.equalsIgnoreCase("Quit") || secondStop.equalsIgnoreCase("Exit")) {
+                    getOut = true;
+                    quit = true;
+                } else {
+                    System.out.println(firstStop + secondStop);
+                    System.out.println("Not Yet Implemented");
+                }
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
         constructTST.stopsToTST("stops.txt");
@@ -78,16 +122,20 @@ public class Main
                              +----------------------------------------------+
                              """);
             switch (inLine.toUpperCase()) {
-                case "1" -> System.out.println("No functionality yet");
+                case "1", "SHORTEST" -> {
+                    System.out.println("Find shortest path");
+                    findShortestPath();
+                }
                 case "2", "SEARCH" -> {
                     System.out.println("Search for bus stop");
                     searchBusStopsByName();
                 }
                 case "3" -> System.out.println("Also no functionality yet");
-                case "quit", "Quit", "exit", "Exit" -> quit = true;
-                default -> System.out.println("""
+                case "QUIT", "EXIT" -> quit = true;
+                default -> System.out.print("""
                                               | Please enter a either 1, 2, 3 or "Quit/Exit" |
-                                              +----------------------------------------------------------------------------------------------------+""");
+                                              +----------------------------------------------------------------------------------------------------+
+                                              """);
             }
         }
         input.close();
