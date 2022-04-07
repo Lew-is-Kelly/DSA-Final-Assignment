@@ -75,7 +75,7 @@ public class Main
                              | What would you like to do?:""");
             String inLine = input.nextLine();
             System.out.print("""
-                             +-----------------------------------------+
+                             +----------------------------------------------+
                              """);
             switch (inLine.toUpperCase()) {
                 case "1" -> System.out.println("No functionality yet");
@@ -87,7 +87,7 @@ public class Main
                 case "quit", "Quit", "exit", "Exit" -> quit = true;
                 default -> System.out.println("""
                                               | Please enter a either 1, 2, 3 or "Quit/Exit" |
-                                              +----------------------------------------------+""");
+                                              +----------------------------------------------------------------------------------------------------+""");
             }
         }
         input.close();
