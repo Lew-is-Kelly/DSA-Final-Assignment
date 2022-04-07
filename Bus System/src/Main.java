@@ -6,14 +6,15 @@ import java.util.Scanner;
 /**
  * DSA 2 Final Assignment. Bus system for Vancouver. Can (1) do nothing, (2) Search for a bus stop by name or the first
  * few letters of the name and (3) also do nothing. Runs a loop and only terminates when the user enters 'quit' or
- * 'exit' and is not case-sensitive.
+ * 'exit' and is not case-sensitive at any time.
  *
  * @author Lewis Kelly 20335015
  */
 public class Main
 {
     static ArrayList<Integer> stops;
-    public static TST<String> searchTree;
+    static TST<String> searchTree;
+    static boolean quit = false;
 
     static Scanner input = new Scanner(System.in);
 
@@ -27,12 +28,16 @@ public class Main
             System.out.print("""
                              +---------------------------------------------------------------------------------------------------------------------------------+
                              | Please enter the name or the first few letters of the stop you would like to search for or "Back" to return to the menu:""");
-            String inLine = input.next();
+            String inLine = input.nextLine();
             System.out.print("""
                              +---------------------------------------------------------------------------------------------------------------------------------+
                              """);
             if (inLine.equalsIgnoreCase("Back")) {
                 getOut = true;
+                System.out.println("Returning to menu");
+            } else if (inLine.equalsIgnoreCase("quit") || inLine.equalsIgnoreCase("exit")) {
+                getOut = true;
+                quit = true;
             } else {
                 System.out.printf("""
                                   | Now searching for %s |
@@ -62,33 +67,30 @@ public class Main
                 | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary. |
                 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
                 """);
-        boolean quit = false;
         while (!quit) {
             System.out.print("""
                              | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.                   |
                              | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit. |
                              +----------------------------------------------------------------------------------------------------+
                              | What would you like to do?:""");
-            String inLine = input.next();
+            String inLine = input.nextLine();
             System.out.print("""
                              +-----------------------------------------+
                              """);
-            switch (inLine) {
+            switch (inLine.toUpperCase()) {
                 case "1" -> System.out.println("No functionality yet");
-                case "2" -> {
+                case "2", "SEARCH" -> {
                     System.out.println("Search for bus stop");
                     searchBusStopsByName();
                 }
                 case "3" -> System.out.println("Also no functionality yet");
-                case "quit", "Quit", "exit", "Exit" -> {
-                    System.out.println("Goodbye!");
-                    quit = true;
-                }
+                case "quit", "Quit", "exit", "Exit" -> quit = true;
                 default -> System.out.println("""
                                               | Please enter a either 1, 2, 3 or "Quit/Exit" |
-                                              +-----------------------------------------+""");
+                                              +----------------------------------------------+""");
             }
         }
         input.close();
+        System.out.println("Goodbye!");
     }
 }
