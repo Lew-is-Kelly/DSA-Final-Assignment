@@ -70,31 +70,58 @@ public class Main
                               %s
                               | Please enter the stop ID of the stop you wish to depart from or "Back" to go back:""",
                               divString);
-            String firstStop = input.nextLine();
+            String inLine = input.nextLine();
             System.out.println(divString);
-            if (firstStop.equalsIgnoreCase("Back")) {
+            if (inLine.equalsIgnoreCase("Back")) {
                 getOut = true;
                 System.out.println("Returning to menu");
-            } else if (firstStop.equalsIgnoreCase("Quit") || firstStop.equalsIgnoreCase("Exit")) {
+            } else if (inLine.equalsIgnoreCase("Quit") || inLine.equalsIgnoreCase("Exit")) {
                 getOut = true;
                 quit = true;
             } else {
+                int fromStop = binarySearch(Integer.parseInt(inLine));
+                System.out.println(fromStop);
+                if (fromStop == -1) {
+                    System.out.printf("%s does not exist, please enter a valid stop.\n", inLine);
+                    continue;
+                }
                 System.out.print("""
                                  | Please enter the stop ID of the stop you wish to arrive at:""");
-                String secondStop = input.nextLine();
+                String lastStop = input.nextLine();
                 System.out.println(divString);
-                if (secondStop.equalsIgnoreCase("Back")) {
+                if (lastStop.equalsIgnoreCase("Back")) {
                     getOut = true;
                     System.out.println("Returning to menu");
-                } else if (secondStop.equalsIgnoreCase("Quit") || secondStop.equalsIgnoreCase("Exit")) {
+                } else if (lastStop.equalsIgnoreCase("Quit") || lastStop.equalsIgnoreCase("Exit")) {
                     getOut = true;
                     quit = true;
                 } else {
-                    System.out.println(firstStop + secondStop);
+                    int toStop = Integer.parseInt(lastStop);
+                    System.out.println(fromStop + " " + toStop);
                     System.out.println("Not Yet Implemented");
                 }
             }
         }
+    }
+
+    public static int binarySearch(int stop)
+    {
+        int left = 0, right = stops.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (stops.get(mid) == stop) {
+                return mid;
+            }
+
+            if (stops.get(mid) < stop) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args)

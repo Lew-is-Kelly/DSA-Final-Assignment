@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.TST;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -102,6 +103,7 @@ public class constructTST
                 Main.searchTree.put(correctLine, Integer.toString(pos));
                 pos++;
             }
+            Collections.sort(Main.stops);
             file.close();
         } catch (FileNotFoundException e) {
             System.err.println("File not found.");
