@@ -15,6 +15,9 @@ public class Main
     static ArrayList<Integer> stops;
     static TST<String> searchTree;
     static boolean quit = false;
+    static String divString =
+            "+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+";
+    // For making things look pretty
 
     static Scanner input = new Scanner(System.in);
 
@@ -25,13 +28,12 @@ public class Main
     {
         boolean getOut = false;
         while (!getOut) {
-            System.out.print("""
-                             +---------------------------------------------------------------------------------------------------------------------------------+
-                             | Please enter the name or the first few letters of the stop you would like to search for or "Back" to return to the menu:""");
+            System.out.printf("""
+                              %s
+                              | Please enter the name or the first few letters of the stop you would like to search for or "Back" to return to the menu:""",
+                              divString);
             String inLine = input.nextLine();
-            System.out.print("""
-                             +---------------------------------------------------------------------------------------------------------------------------------+
-                             """);
+            System.out.println(divString);
             if (inLine.equalsIgnoreCase("Back")) {
                 getOut = true;
                 System.out.println("Returning to menu");
@@ -40,16 +42,16 @@ public class Main
                 quit = true;
             } else {
                 System.out.printf("""
-                                  | Now searching for %s |
-                                  +--------------------------------------------------------------------------------------------------------------+
-                                  """, inLine.toUpperCase());
+                                  | Now searching for %s
+                                  %s
+                                  """, inLine.toUpperCase(), divString);
                 int numOfStops = 0;
                 for (String stop : searchTree.keysWithPrefix(inLine.toUpperCase())) {
                     numOfStops++;
                     System.out.println(stop);
                 }
                 if (numOfStops < 1) {
-                    System.out.println("No stops begin with those letters or match that name. Sorry.");
+                    System.out.printf("No stops match %s. Sorry.\n", inLine.toUpperCase());
                 } else {
                     System.out.printf("Found %d stops.\n", numOfStops);
                 }
@@ -63,31 +65,25 @@ public class Main
     public static void findShortestPath()
     {
         boolean getOut = false;
-        while (!getOut)
-        {
-            System.out.print("""
-                               +-------------------------------------------------------------------------------------+
-                               | Please enter the stop ID of the stop you wish to depart from or "Back" to go back:""");
+        while (!getOut) {
+            System.out.printf("""
+                              %s
+                              | Please enter the stop ID of the stop you wish to depart from or "Back" to go back:""",
+                              divString);
             String firstStop = input.nextLine();
-            System.out.print("""
-                             +-------------------------------------------------------------------------------------+
-                             """);
+            System.out.println(divString);
             if (firstStop.equalsIgnoreCase("Back")) {
                 getOut = true;
                 System.out.println("Returning to menu");
-            } else if (firstStop.equalsIgnoreCase("Quit") || firstStop.equalsIgnoreCase("Exit"))
-            {
+            } else if (firstStop.equalsIgnoreCase("Quit") || firstStop.equalsIgnoreCase("Exit")) {
                 getOut = true;
                 quit = true;
             } else {
                 System.out.print("""
                                  | Please enter the stop ID of the stop you wish to arrive at:""");
                 String secondStop = input.nextLine();
-                System.out.print("""
-                             +-------------------------------------------------------------------------------------+
-                             """);
-                if (secondStop.equalsIgnoreCase("Back"))
-                {
+                System.out.println(divString);
+                if (secondStop.equalsIgnoreCase("Back")) {
                     getOut = true;
                     System.out.println("Returning to menu");
                 } else if (secondStop.equalsIgnoreCase("Quit") || secondStop.equalsIgnoreCase("Exit")) {
@@ -105,22 +101,19 @@ public class Main
     {
         constructTST.stopsToTST("stops.txt");
 
-        System.out.print(
-                """
-                +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary. |
-                +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                """);
+        System.out.printf("""
+                          %s
+                          | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary.
+                          %s
+                          """, divString, divString);
         while (!quit) {
-            System.out.print("""
-                             | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.                   |
-                             | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit. |
-                             +----------------------------------------------------------------------------------------------------+
-                             | What would you like to do?:""");
+            System.out.printf("""
+                              | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.
+                              | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit.
+                              %s
+                              | What would you like to do?:""", divString);
             String inLine = input.nextLine();
-            System.out.print("""
-                             +----------------------------------------------+
-                             """);
+            System.out.println(divString);
             switch (inLine.toUpperCase()) {
                 case "1", "SHORTEST" -> {
                     System.out.println("Find shortest path");
@@ -132,10 +125,10 @@ public class Main
                 }
                 case "3" -> System.out.println("Also no functionality yet");
                 case "QUIT", "EXIT" -> quit = true;
-                default -> System.out.print("""
-                                              | Please enter a either 1, 2, 3 or "Quit/Exit" |
-                                              +----------------------------------------------------------------------------------------------------+
-                                              """);
+                default -> System.out.printf("""
+                                             | Please enter a either 1, 2, 3 or "Quit/Exit"
+                                             %s
+                                             """, divString);
             }
         }
         input.close();
