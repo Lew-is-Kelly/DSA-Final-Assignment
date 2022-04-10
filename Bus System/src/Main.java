@@ -12,6 +12,8 @@ import java.util.Scanner;
  */
 public class Main
 {
+    static ArrayList<String> stopTimes;
+    static EdgeWeightedDigraph stopGraph;
     static ArrayList<Integer> stops;
     static TST<String> searchTree;
     static boolean quit = false;
@@ -21,112 +23,9 @@ public class Main
 
     static Scanner input = new Scanner(System.in);
 
-    /**
-     * Searches for a bus stop by its name
-     */
-    public static void searchBusStopsByName()
-    {
-        boolean getOut = false;
-        while (!getOut) {
-            System.out.printf("""
-                              %s
-                              | Please enter the name or the first few letters of the stop you would like to search for or "Back" to return to the menu:""",
-                              divString);
-            String inLine = input.nextLine();
-            System.out.println(divString);
-            if (inLine.equalsIgnoreCase("Back")) {
-                getOut = true;
-                System.out.println("Returning to menu");
-            } else if (inLine.equalsIgnoreCase("quit") || inLine.equalsIgnoreCase("exit")) {
-                getOut = true;
-                quit = true;
-            } else {
-                System.out.printf("""
-                                  | Now searching for %s
-                                  %s
-                                  """, inLine.toUpperCase(), divString);
-                int numOfStops = 0;
-                for (String stop : searchTree.keysWithPrefix(inLine.toUpperCase())) {
-                    numOfStops++;
-                    System.out.println(stop);
-                }
-                if (numOfStops < 1) {
-                    System.out.printf("No stops match %s. Sorry.\n", inLine.toUpperCase());
-                } else {
-                    System.out.printf("Found %d stops.\n", numOfStops);
-                }
-            }
-        }
-    }
-
-    /**
-     * Finds the shortest path between two bus stops.
-     */
-    public static void findShortestPath()
-    {
-        boolean getOut = false;
-        while (!getOut) {
-            System.out.printf("""
-                              %s
-                              | Please enter the stop ID of the stop you wish to depart from or "Back" to go back:""",
-                              divString);
-            String inLine = input.nextLine();
-            System.out.println(divString);
-            if (inLine.equalsIgnoreCase("Back")) {
-                getOut = true;
-                System.out.println("Returning to menu");
-            } else if (inLine.equalsIgnoreCase("Quit") || inLine.equalsIgnoreCase("Exit")) {
-                getOut = true;
-                quit = true;
-            } else {
-                int fromStop = binarySearch(Integer.parseInt(inLine));
-                System.out.println(fromStop);
-                if (fromStop == -1) {
-                    System.out.printf("%s does not exist, please enter a valid stop.\n", inLine);
-                    continue;
-                }
-                System.out.print("""
-                                 | Please enter the stop ID of the stop you wish to arrive at:""");
-                String lastStop = input.nextLine();
-                System.out.println(divString);
-                if (lastStop.equalsIgnoreCase("Back")) {
-                    getOut = true;
-                    System.out.println("Returning to menu");
-                } else if (lastStop.equalsIgnoreCase("Quit") || lastStop.equalsIgnoreCase("Exit")) {
-                    getOut = true;
-                    quit = true;
-                } else {
-                    int toStop = Integer.parseInt(lastStop);
-                    System.out.println(fromStop + " " + toStop);
-                    System.out.println("Not Yet Implemented");
-                }
-            }
-        }
-    }
-
-    public static int binarySearch(int stop)
-    {
-        int left = 0, right = stops.size() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (stops.get(mid) == stop) {
-                return mid;
-            }
-
-            if (stops.get(mid) < stop) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-
     public static void main(String[] args)
     {
-        constructTST.stopsToTST("stops.txt");
+        Constructors.readAll("stops.txt", "transfers.txt", "stop_times.txt");
 
         System.out.printf("""
                           %s
@@ -143,14 +42,17 @@ public class Main
             System.out.println(divString);
             switch (inLine.toUpperCase()) {
                 case "1", "SHORTEST" -> {
-                    System.out.println("Find shortest path");
-                    findShortestPath();
+                    System.out.println("Shortest Path Finder");
+                    ShortestPath.findShortestPath();
                 }
                 case "2", "SEARCH" -> {
-                    System.out.println("Search for bus stop");
-                    searchBusStopsByName();
+                    System.out.println("Bus Stop Search");
+                    SearchStop.searchBusStopsByName();
                 }
-                case "3" -> System.out.println("Also no functionality yet");
+                case "3", "ARRIVAL" -> {
+                    System.out.println("No functionality yet");
+                    ArrivalTime.getArrivalTimes();
+                }
                 case "QUIT", "EXIT" -> quit = true;
                 default -> System.out.printf("""
                                              | Please enter a either 1, 2, 3 or "Quit/Exit"
