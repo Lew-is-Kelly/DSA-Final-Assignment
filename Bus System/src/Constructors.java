@@ -17,11 +17,11 @@ public class Constructors
      */
     public static void readAll(String stopsFileName, String transFileName, String timesFileName)
     {
-        System.out.printf("%s\nReading Files...\n", Main.divString);
+        System.out.printf("%s\n| Reading Files...\n", Main.divString);
         readStops(stopsFileName);
         readTransfers(transFileName);
         readTimes(timesFileName);
-        System.out.println("Done!");
+        System.out.println("| Done!");
     }
 
     /**
@@ -56,7 +56,7 @@ public class Constructors
             Main.stopGraph = new EdgeWeightedDigraph(Main.stops.size());
             file.close();
         } catch (FileNotFoundException e) {
-            System.err.printf("%s not found.\n", fileName);
+            System.err.printf("| %s not found.\n", fileName);
             e.printStackTrace();
         }
     }
@@ -93,7 +93,7 @@ public class Constructors
             }
             file.close();
         } catch (FileNotFoundException e) {
-            System.err.printf("%s not found.\n", fileName);
+            System.err.printf("| %s not found.\n", fileName);
             e.printStackTrace();
         }
     }
@@ -136,7 +136,7 @@ public class Constructors
 
             file.close();
         } catch (FileNotFoundException e) {
-            System.err.printf("%s not found.\n", fileName);
+            System.err.printf("| %s not found.\n", fileName);
             e.printStackTrace();
         }
     }
