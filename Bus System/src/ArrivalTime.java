@@ -1,5 +1,7 @@
 /**
  * Class that contains a method to list all times that match the time input by the user.
+ *
+ * @author Lewis Kelly 20335015
  */
 public class ArrivalTime
 {

@@ -1,4 +1,3 @@
-
 /**
  * Class that makes a TST of the bus stops with the names of the stops as the first item in the line and certain
  * keywords shifted to the end of the stop name.

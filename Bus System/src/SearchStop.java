@@ -1,5 +1,7 @@
 /**
  * Class to search for the name of a bus stop.
+ *
+ * @author Lewis Kelly 20335015
  */
 public class SearchStop
 {

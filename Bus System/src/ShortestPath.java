@@ -1,9 +1,16 @@
 import edu.princeton.cs.algs4.*;
 
+/**
+ * Class that contains the method to find the shortest path between two stops using Dijkstra.
+ *
+ * @author Lewis Kelly 20335015
+ */
 public class ShortestPath
 {
     /**
      * Finds the shortest path between two bus stops.
+     *
+     * @author Lewis Kelly 20335015
      */
     public static void findShortestPath()
     {
