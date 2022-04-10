@@ -66,10 +66,9 @@ public class ShortestPath
                         } else {
                             System.out.println("| No Path");
                         }
-
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("| Please only enter a bus stop number, \"Back\" or \"Quit\"");
+                    System.out.println("| Please only enter one bus stop number, \"Back\" or \"Quit\"");
                 }
             }
         }
