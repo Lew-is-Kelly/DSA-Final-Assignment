@@ -29,28 +29,28 @@ public class Main
 
         System.out.printf("""
                           %s
-                          | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary.
+                          | Welcome to Vancouver bus system by Lewis Kelly
                           %s
                           """, divString, divString);
         while (!quit) {
             System.out.printf("""
-                              | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.
+                              | Would you like to (1) Search for the shortest path between two bus stops, (2), Search for a bus stop by name or (3) List all trips that arrive at a specified time.
                               | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit.
                               %s
-                              | What would you like to do?:""", divString);
+                              | What would you like to do?:\040""", divString);
             String inLine = input.nextLine();
             System.out.println(divString);
             switch (inLine.toUpperCase()) {
                 case "1", "SHORTEST" -> {
-                    System.out.println("Shortest Path Finder");
+                    System.out.println("| Shortest Path Finder");
                     ShortestPath.findShortestPath();
                 }
                 case "2", "SEARCH" -> {
-                    System.out.println("Bus Stop Search");
+                    System.out.println("| Bus Stop Search");
                     SearchStop.searchBusStopsByName();
                 }
                 case "3", "ARRIVAL" -> {
-                    System.out.println("No functionality yet");
+                    System.out.println("| Arrival Time Lister");
                     ArrivalTime.getArrivalTimes();
                 }
                 case "QUIT", "EXIT" -> quit = true;
@@ -61,6 +61,6 @@ public class Main
             }
         }
         input.close();
-        System.out.println("Goodbye!");
+        System.out.println("| Goodbye!");
     }
 }
