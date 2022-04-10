@@ -1,9 +1,3 @@
-import edu.princeton.cs.algs4.TST;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Class that makes a TST of the bus stops with the names of the stops as the first item in the line and certain
@@ -11,7 +5,7 @@ import java.util.Scanner;
  *
  * @author Lewis Kelly 20335015
  */
-public class constructTST
+public class Functions
 {
     /**
      * Takes a string containing the full name of a stop and returns the stop name with the keywords
@@ -75,37 +69,28 @@ public class constructTST
     }
 
     /**
-     * Takes the stop information from the file passed and creates a TST (Ternary Search Tree) to enable efficient
-     * searching of the stop information.
+     * Basic binary search for the stops ArrayList.
      *
-     * @param fileName Name of the file containing the stop information
+     * @param stop Stop you are searching for
+     * @return Index of stop or -1 if the stop was not found
      */
-    public static void stopsToTST(String fileName)
+    public static int binarySearch(int stop)
     {
-        try {
-            if (fileName == null) {
-                return;
+        int left = 0, right = Main.stops.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (Main.stops.get(mid) == stop) {
+                return mid;
             }
 
-            Scanner file = new Scanner(new FileReader(fileName));
-            file.nextLine();        // First line is redundant
-            int pos = 0;
-            Main.stops = new ArrayList<>();
-            Main.searchTree = new TST<>();
-            while (file.hasNextLine()) {
-                String[] currLine = file.nextLine().split(",");
-                Main.stops.add(Integer.parseInt(currLine[0]));
-                String trueName = getTrueName(currLine[2]);
-                currLine[2] = trueName;
-                rotateLeftBy(currLine, 2);
-                String correctLine = makeNewString(currLine, ",");
-                Main.searchTree.put(correctLine, Integer.toString(pos));
-                pos++;
+            if (Main.stops.get(mid) < stop) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-            file.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found.");
-            e.printStackTrace();
         }
+        return -1;
     }
 }

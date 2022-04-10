@@ -12,82 +12,52 @@ import java.util.Scanner;
  */
 public class Main
 {
+    static ArrayList<String> stopTimes;
+    static EdgeWeightedDigraph stopGraph;
     static ArrayList<Integer> stops;
     static TST<String> searchTree;
     static boolean quit = false;
+    static String divString =
+            "+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+";
+    // For making things look pretty
 
     static Scanner input = new Scanner(System.in);
 
-    /**
-     * Searches for a bus stop by its name
-     */
-    public static void searchBusStopsByName()
-    {
-        boolean getOut = false;
-        while (!getOut) {
-            System.out.print("""
-                             +---------------------------------------------------------------------------------------------------------------------------------+
-                             | Please enter the name or the first few letters of the stop you would like to search for or "Back" to return to the menu:""");
-            String inLine = input.nextLine();
-            System.out.print("""
-                             +---------------------------------------------------------------------------------------------------------------------------------+
-                             """);
-            if (inLine.equalsIgnoreCase("Back")) {
-                getOut = true;
-                System.out.println("Returning to menu");
-            } else if (inLine.equalsIgnoreCase("quit") || inLine.equalsIgnoreCase("exit")) {
-                getOut = true;
-                quit = true;
-            } else {
-                System.out.printf("""
-                                  | Now searching for %s |
-                                  +--------------------------------------------------------------------------------------------------------------+
-                                  """, inLine.toUpperCase());
-                int numOfStops = 0;
-                for (String stop : searchTree.keysWithPrefix(inLine.toUpperCase())) {
-                    numOfStops++;
-                    System.out.println(stop);
-                }
-                if (numOfStops < 1) {
-                    System.out.println("No stops begin with those letters or match that name. Sorry.");
-                } else {
-                    System.out.printf("Found %d stops.\n", numOfStops);
-                }
-            }
-        }
-    }
-
     public static void main(String[] args)
     {
-        constructTST.stopsToTST("stops.txt");
+        Constructors.readAll("stops.txt", "transfers.txt", "stop_times.txt");
 
-        System.out.print(
-                """
-                +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary. |
-                +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                """);
+        System.out.printf("""
+                          %s
+                          | Welcome to the some sort of Vancouver bus system. I'm not quite sure what its meant to do yet because I have not yet fully read the brief. This text is temporary.
+                          %s
+                          """, divString, divString);
         while (!quit) {
-            System.out.print("""
-                             | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.                   |
-                             | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit. |
-                             +----------------------------------------------------------------------------------------------------+
-                             | What would you like to do?:""");
+            System.out.printf("""
+                              | Would you like to (1) do nothing, (2), Search for a buss stop or (3) do nothing.
+                              | Please enter the number (1, 2 or 3) for the functionality you would like or "Quit"/"Exit" to quit.
+                              %s
+                              | What would you like to do?:""", divString);
             String inLine = input.nextLine();
-            System.out.print("""
-                             +----------------------------------------------+
-                             """);
+            System.out.println(divString);
             switch (inLine.toUpperCase()) {
-                case "1" -> System.out.println("No functionality yet");
-                case "2", "SEARCH" -> {
-                    System.out.println("Search for bus stop");
-                    searchBusStopsByName();
+                case "1", "SHORTEST" -> {
+                    System.out.println("Shortest Path Finder");
+                    ShortestPath.findShortestPath();
                 }
-                case "3" -> System.out.println("Also no functionality yet");
-                case "quit", "Quit", "exit", "Exit" -> quit = true;
-                default -> System.out.println("""
-                                              | Please enter a either 1, 2, 3 or "Quit/Exit" |
-                                              +----------------------------------------------------------------------------------------------------+""");
+                case "2", "SEARCH" -> {
+                    System.out.println("Bus Stop Search");
+                    SearchStop.searchBusStopsByName();
+                }
+                case "3", "ARRIVAL" -> {
+                    System.out.println("No functionality yet");
+                    ArrivalTime.getArrivalTimes();
+                }
+                case "QUIT", "EXIT" -> quit = true;
+                default -> System.out.printf("""
+                                             | Please enter a either 1, 2, 3 or "Quit/Exit"
+                                             %s
+                                             """, divString);
             }
         }
         input.close();
