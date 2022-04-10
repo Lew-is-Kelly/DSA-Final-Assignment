@@ -1,12 +1,10 @@
-import java.util.Arrays;
-
 /**
- * TODO
+ * Class that contains a method to list all times that match the time input by the user.
  */
 public class ArrivalTime
 {
     /**
-     * TODO
+     * Lists all the times from the file that match the time input by the user.
      */
     static void getArrivalTimes()
     {
